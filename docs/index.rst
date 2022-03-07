@@ -1,9 +1,8 @@
 sphinx-sharedconf
 =================
 
-Share a single ``conf.py`` file between several Sphinx projects,
-useful if you want to import several projects from the same
-repository on `Read the Docs <https://readthedocs.org/>`__.
+Build multiple Sphinx projects from a single repository on
+`Read the Docs <https://readthedocs.org/>`__.
 
 .. warning::
 
