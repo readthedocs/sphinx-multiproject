@@ -35,25 +35,25 @@ Then you can build your documentation with:
 Changing settings depending on the current docset
 -------------------------------------------------
 
-If the ``config`` option of the :confval:`sharedconf_docsets` option isn't enough,
+If the ``config`` option of the :confval:`multiproject_projects` option isn't enough,
 you can check for the current docset in your ``conf.py`` file as follows:
 
 .. code-block:: python
 
    # File: conf.py
 
-   from sharedconf.utils import get_docset
+   from multiproject.utils import get_project
 
    extensions = [
-      "sharedconf.extension",
+      "multiproject.extension",
    ]
 
-   sharedconf_docsets = {
+   multiproject_projects = {
       "user": {},
       "dev": {},
    }
 
-   docset = get_docset(sharedconf_docsets)
+   docset = get_project(multiproject_projects)
 
    locale_dirs = [f"{docset}/locale/"]
 

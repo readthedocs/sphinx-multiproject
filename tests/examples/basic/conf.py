@@ -1,5 +1,5 @@
 extensions = [
-    "sharedconf.extension",
+    "multiproject.extension",
     "sphinx.ext.intersphinx",
     "sphinx.ext.autodoc",
 ]
@@ -7,7 +7,7 @@ extensions = [
 master_doc = "index"
 language = "en"
 
-sharedconf_docsets = {
+multiproject_projects = {
     "api": {},
     "dev": {},
     "user": {},

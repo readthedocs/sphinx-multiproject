@@ -9,7 +9,7 @@ basedir = Path(__file__).parent / "examples"
 class TestExtension:
     @pytest.mark.sphinx("html", srcdir=basedir / "basic")
     def test_build_default_docset(self, app):
-        assert list(app.config.sharedconf_docsets.keys())[0] == "api"
+        assert list(app.config.multiproject_projects.keys())[0] == "api"
         app.build()
         expected_srcdir = basedir / "basic/api"
         assert app.srcdir == str(expected_srcdir)
@@ -36,7 +36,7 @@ class TestExtension:
     def test_per_docset_settings(self, make_app):
         config = {
             "project": "A project",
-            "sharedconf_docsets": {
+            "multiproject_projects": {
                 "dev": {
                     "config": {
                         "project": "Dev documentation",
@@ -54,7 +54,7 @@ class TestExtension:
 
     def test_custom_docset_path(self, make_app):
         config = {
-            "sharedconf_docsets": {
+            "multiproject_projects": {
                 "dev": {
                     "path": "user",
                 },
@@ -69,7 +69,7 @@ class TestExtension:
     def test_custom_env_var(self, make_app, monkeypatch):
         monkeypatch.setenv("DOCSET", "dev")
         monkeypatch.setenv("MYDOCSET", "user")
-        config = {"sharedconf_env_var": "MYDOCSET"}
+        config = {"multiproject_env_var": "MYDOCSET"}
         app = make_app("html", srcdir=basedir / "basic", confoverrides=config)
         app.build()
 
@@ -79,11 +79,11 @@ class TestExtension:
         out = (Path(app.outdir) / "index.html").read_text()
         assert "User documentation" in out
 
-    @mock.patch("sharedconf.extension.log")
+    @mock.patch("multiproject.extension.log")
     def test_warn_special_settings(self, log, make_app):
         config = {
             "language": "en",
-            "sharedconf_docsets": {
+            "multiproject_projects": {
                 "dev": {
                     "config": {
                         "language": "es",

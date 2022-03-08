@@ -4,7 +4,7 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-from sharedconf import __version__
+from multiproject import __version__
 
 
 # -- Project information -----------------------------------------------------

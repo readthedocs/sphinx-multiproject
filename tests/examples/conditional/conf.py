@@ -1,28 +1,28 @@
-from sharedconf.utils import get_docset
+from multiproject.utils import get_project
 
 extensions = [
-    "sharedconf.extension",
+    "multiproject.extension",
     "sphinx.ext.intersphinx",
     "sphinx.ext.autodoc",
 ]
 
 master_doc = "index"
 
-sharedconf_docsets = {
+multiproject_projects = {
     "api": {},
     "dev": {},
     "user": {},
 }
 
-docset = get_docset(sharedconf_docsets)
+current_project = get_project(multiproject_projects)
 
-if docset == "api":
+if current_project == "api":
     language = "en"
     suppress_warnings = ["ref.doc"]
     locale_dirs = ["locale/api"]
-elif docset == "dev":
+elif current_project == "dev":
     language = "es"
     suppress_warnings = ["ref.python"]
-elif docset == "user":
+elif current_project == "user":
     language = "de"
     locale_dirs = ["locale/api"]

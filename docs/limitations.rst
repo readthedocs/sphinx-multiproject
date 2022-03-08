@@ -13,7 +13,7 @@ These options are:
 - :confval:`sphinx:language`
 - :confval:`sphinx:locale_dirs`
 
-They should be defined outside the :confval:`sharedconf_docsets` option,
+They should be defined outside the :confval:`multiproject_projects` option,
 but you can still change these per-project, see :ref:`advanced-usage:changing settings depending on the current docset`.
 
 app.confdir vs app.srcdir

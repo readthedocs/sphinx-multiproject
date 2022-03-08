@@ -3,9 +3,9 @@ Configuration
 
 You can set the following options in your ``conf.py`` file.
 
-.. confval:: sharedconf_docsets
+.. confval:: multiproject_projects
 
-   A dictionary defining the projects (docsets) that will share the configuration.
+   A dictionary defining the projects that will share the configuration.
    You must define at least one docset.
 
    Each docset can have the following options:
@@ -26,7 +26,7 @@ You can set the following options in your ``conf.py`` file.
 
    .. code-block:: python
 
-      sharedconf_env_var = {
+      multiproject_env_var = {
          "user": {},
          "dev": {
             "path": "path/to/your/docset/"
@@ -36,7 +36,7 @@ You can set the following options in your ``conf.py`` file.
          },
       }
 
-.. confval:: sharedconf_env_var
+.. confval:: multiproject_env_var
 
    The name of the environment variable to read the current docset from.
    Defaults to ``DOCSET``.
@@ -45,4 +45,4 @@ You can set the following options in your ``conf.py`` file.
 
    .. code-block:: python
 
-      sharedconf_env_var = "SPHINX_PROJECT"
+      multiproject_env_var = "SPHINX_PROJECT"

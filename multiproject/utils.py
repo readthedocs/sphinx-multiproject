@@ -5,7 +5,7 @@ from sphinx.util import logging
 log = logging.getLogger(__name__)
 
 
-def get_docset(docsets, env_var="DOCSET"):
+def get_project(docsets, env_var="DOCSET"):
     """
     Get the current docset.
 

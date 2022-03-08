@@ -8,8 +8,11 @@ log = logging.getLogger(__name__)
 
 
 def _get_docset_from_config(config):
-    docset = utils.get_docset(config.sharedconf_docsets, config.sharedconf_env_var)
-    return docset, config.sharedconf_docsets[docset]
+    docset = utils.get_project(
+        config.multiproject_projects,
+        config.multiproject_env_var,
+    )
+    return docset, config.multiproject_projects[docset]
 
 
 def _override_srdir(app, config):
@@ -55,13 +58,13 @@ def _config_inited(app, config):
 
 def setup(app):
     app.add_config_value(
-        "sharedconf_env_var",
+        "multiproject_env_var",
         default="DOCSET",
         rebuild="env",
         types=[str],
     )
     app.add_config_value(
-        "sharedconf_docsets",
+        "multiproject_projects",
         default={},
         rebuild="env",
         types=[dict],

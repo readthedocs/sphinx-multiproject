@@ -33,14 +33,14 @@ configuration file.
    # File: docs/conf.py
 
    extensions = [
-      "sharedconf.extension",
+      "multiproject.extension",
       # Your other extensions.
       "sphinx.ext.intersphinx",
       ...
    ]
 
    # Define the projects that will share this configuration file.
-   sharedconf_docsets = {
+   multiproject_projects = {
        "user": {
            "config": {
                # Specific options for this docset.
