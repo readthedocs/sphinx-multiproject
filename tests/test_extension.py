@@ -7,19 +7,13 @@ basedir = Path(__file__).parent / "examples"
 
 
 class TestExtension:
-    def _read_text(self, path):
-        """Compatible read_text for Sphinx<3."""
-        if hasattr(path, "read_text"):
-            return path.read_text()
-        return path.text()
-
     @pytest.mark.sphinx("html", srcdir=basedir / "basic")
     def test_build_default_docset(self, app):
         assert list(app.config.sharedconf_docsets.keys())[0] == "api"
         app.build()
         expected_srcdir = basedir / "basic/api"
         assert app.srcdir == str(expected_srcdir)
-        out = self._read_text(Path(app.outdir) / "index.html")
+        out = (Path(app.outdir) / "index.html").read_text()
         assert "API documentation" in out
 
     @pytest.mark.parametrize(
@@ -36,7 +30,7 @@ class TestExtension:
         app.build()
         expected_srcdir = basedir / "basic" / docset
         assert app.srcdir == str(expected_srcdir)
-        out = self._read_text(Path(app.outdir) / "index.html")
+        out = (Path(app.outdir) / "index.html").read_text()
         assert expected_text in out
 
     def test_per_docset_settings(self, make_app):
@@ -55,7 +49,7 @@ class TestExtension:
 
         assert app.config.project == "Dev documentation"
 
-        out = self._read_text(Path(app.outdir) / "index.html")
+        out = (Path(app.outdir) / "index.html").read_text()
         assert "Dev documentation" in out
 
     def test_custom_docset_path(self, make_app):
@@ -69,7 +63,7 @@ class TestExtension:
         app = make_app("html", srcdir=basedir / "basic", confoverrides=config)
         app.build()
 
-        out = self._read_text(Path(app.outdir) / "index.html")
+        out = (Path(app.outdir) / "index.html").read_text()
         assert "User documentation" in out
 
     def test_custom_env_var(self, make_app, monkeypatch):
@@ -82,7 +76,7 @@ class TestExtension:
         expected_srcdir = basedir / "basic/user"
         assert app.srcdir == str(expected_srcdir)
 
-        out = self._read_text(Path(app.outdir) / "index.html")
+        out = (Path(app.outdir) / "index.html").read_text()
         assert "User documentation" in out
 
     @mock.patch("sharedconf.extension.log")
@@ -149,7 +143,7 @@ class TestExtension:
         expected_srcdir = basedir / "conditional" / docset
         assert app.srcdir == str(expected_srcdir)
 
-        out = self._read_text(Path(app.outdir) / "index.html")
+        out = (Path(app.outdir) / "index.html").read_text()
         assert expected_text in out
 
         for k, v in expected_config.items():

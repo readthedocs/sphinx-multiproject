@@ -1,6 +1,5 @@
 from pathlib import Path
 
-from sphinx import version_info
 from sphinx.util import logging
 
 from . import __version__, utils
@@ -68,15 +67,13 @@ def setup(app):
         types=[dict],
     )
 
-    kwargs = {
-        "event": "config-inited",
-        "callback": _config_inited,
-    }
-    if version_info >= (3, 0):
-        # Priority should be as low as possible, so other extensions that
-        # depend on the srcdir or the docset config use the new value.
-        kwargs["priority"] = -999
-    app.connect(**kwargs)
+    # Priority should be as low as possible, so other extensions that
+    # depend on the srcdir or the docset config use the new value.
+    app.connect(
+        event="config-inited",
+        callback=_config_inited,
+        priority=-999,
+    )
 
     return {
         "version": __version__,
