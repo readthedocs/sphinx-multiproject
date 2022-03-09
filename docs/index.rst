@@ -1,4 +1,4 @@
-sphinx-multiploject
+sphinx-multiproject
 ===================
 
 Build multiple Sphinx projects from a single repository on

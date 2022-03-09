@@ -64,7 +64,7 @@ def _override_config(app, config):
         if option in pre_init_options:
             log.warning(
                 "Setting the `%s` option from the extension options won't have the desired effect. "
-                "Please see https://sphinx-multiploject.readthedocs.io/page/limitation.html#pre-init-options",
+                "Please see https://sphinx-multiproject.readthedocs.io/page/limitation.html#pre-init-options",
                 option,
             )
         config[option] = value
