@@ -45,7 +45,7 @@ def _override_config(config):
         if option in pre_init_options:
             log.warning(
                 "Setting the `%s` option inside the docset won't have the desired effect. "
-                "Please see https://sphinx-sharedconf.readthedocs.io/page/limitation.html",
+                "Please see https://sphinx-multiploject.readthedocs.io/page/limitation.html",
                 option,
             )
         config[option] = value

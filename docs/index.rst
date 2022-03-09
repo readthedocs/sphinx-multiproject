@@ -1,5 +1,5 @@
-sphinx-sharedconf
-=================
+sphinx-multiploject
+===================
 
 Build multiple Sphinx projects from a single repository on
 `Read the Docs <https://readthedocs.org/>`__.

@@ -8,7 +8,7 @@ Install the extension:
 
 .. code-block:: console
 
-   $ pip install sphinx-sharedconf
+   $ pip install sphinx-multiproject
 
 Usage
 -----

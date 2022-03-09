@@ -9,7 +9,7 @@ from multiproject import __version__
 
 # -- Project information -----------------------------------------------------
 
-project = "sphinx-sharedconf"
+project = "sphinx-multiproject"
 copyright = "2022, Read the Docs, Inc"
 author = "Read the Docs, Inc"
 
