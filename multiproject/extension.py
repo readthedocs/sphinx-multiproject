@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from sphinx.config import CONFIG_FILENAME, eval_config_file
 from sphinx.util import logging
 
 from . import __version__, utils
@@ -7,45 +8,63 @@ from . import __version__, utils
 log = logging.getLogger(__name__)
 
 
-def _get_docset_from_config(config):
-    docset = utils.get_project(
+def _get_project_from_config(config):
+    project = utils.get_project(
         config.multiproject_projects,
         config.multiproject_env_var,
     )
-    return docset, config.multiproject_projects[docset]
+    return project, config.multiproject_projects[project]
 
 
 def _override_srdir(app, config):
     """
-    Override app.srcdir with the value from the current docset.
+    Override app.srcdir with the value from the current project.
 
-    If the docset doesn't have a path,
-    the name of the docset is used as the path.
+    If the project doesn't have a path,
+    the name of the project is used as the path.
 
     Values can be absolute or relative to the original source dir.
     """
-    docset, options = _get_docset_from_config(config)
-    log.info("Using docset: %s", docset)
+    project, options = _get_project_from_config(config)
+    log.info("Using project: %s", project)
 
     original_srcdir = Path(app.srcdir)
-    new_srcdir = Path(options.get("path", docset))
+    new_srcdir = Path(options.get("path", project))
     if not new_srcdir.is_absolute():
         new_srcdir = original_srcdir / new_srcdir
     app.srcdir = str(new_srcdir.resolve())
 
 
-def _override_config(config):
-    """Override the config with specific values from the current docset."""
-    docset, options = _get_docset_from_config(config)
-    docset_config = options.get("config", {})
+def _override_config(app, config):
+    """Override the config with specific values from the current project."""
+    _, options = _get_project_from_config(config)
+    project_config = options.get("config", {})
+    if options.get("use_config_file", True):
+        config_file = Path(app.srcdir) / CONFIG_FILENAME
+        if config_file.exists():
+            project_config.update(
+                eval_config_file(
+                    filename=str(config_file),
+                    tags=None,
+                )
+            )
+        else:
+            log.warning("The %s file doesn't exist.", config_file)
+
     # Taken from
     # https://github.com/sphinx-doc/sphinx/blob/586de7300a5269de93b4d813408ffdbf10ce2409/sphinx/config.py#L222-L222
-    pre_init_options = {"needs_sphinx", "suppress_warnings", "language", "locale_dirs"}
-    for option, value in docset_config.items():
+    pre_init_options = {
+        "extensions",
+        "needs_sphinx",
+        "suppress_warnings",
+        "language",
+        "locale_dirs",
+    }
+    for option, value in project_config.items():
         if option in pre_init_options:
             log.warning(
-                "Setting the `%s` option inside the docset won't have the desired effect. "
-                "Please see https://sphinx-multiploject.readthedocs.io/page/limitation.html",
+                "Setting the `%s` option from the extension options won't have the desired effect. "
+                "Please see https://sphinx-multiploject.readthedocs.io/page/limitation.html#pre-init-options",
                 option,
             )
         config[option] = value
@@ -53,13 +72,13 @@ def _override_config(config):
 
 def _config_inited(app, config):
     _override_srdir(app, config)
-    _override_config(config)
+    _override_config(app, config)
 
 
 def setup(app):
     app.add_config_value(
         "multiproject_env_var",
-        default="DOCSET",
+        default="PROJECT",
         rebuild="env",
         types=[str],
     )
@@ -71,7 +90,7 @@ def setup(app):
     )
 
     # Priority should be as low as possible, so other extensions that
-    # depend on the srcdir or the docset config use the new value.
+    # depend on the srcdir or the project config use the new values.
     app.connect(
         event="config-inited",
         callback=_config_inited,

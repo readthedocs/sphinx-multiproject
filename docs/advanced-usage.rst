@@ -11,36 +11,38 @@ so you can build your documentation with one command:
 
    $ make html
 
-But when building multiple docsets, they will share the same output directory.
+But when building multiple projects, they will share the same output directory.
 Change the ``Makefile`` as follows to set a different build
-directory for each docset.
+directory for each project.
 
 .. code-block:: make
 
-   # Put your default docset here.
-   DOCSET ?= user
-   BUILDDIR = _build/$(DOCSET)
+   # Put your default project here.
+   PROJECT ?= user
+   BUILDDIR = _build/$(PROJECT)
 
 Then you can build your documentation with:
 
-
 .. code-block:: console
 
-   # Will build the user docset at _build/user/html/
+   # Will build the user project at _build/user/html/
    $ make html
 
-   # Will build the dev docset at _build/dev/html/
-   $ DOCSET=dev make html
+   # Will build the dev project at _build/dev/html/
+   $ PROJECT=dev make html
 
-Changing settings depending on the current docset
--------------------------------------------------
+Manually changing settings based on the current project
+-------------------------------------------------------
 
-If the ``config`` option of the :confval:`multiproject_projects` option isn't enough,
-you can check for the current docset in your ``conf.py`` file as follows:
+If the :confval:`config` or :confval:`use_config_file` options aren't enough,
+you can change the settings for each project manually.
+
+Using one conf.py file
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
-   # File: conf.py
+   # File: docs/conf.py
 
    from multiproject.utils import get_project
 
@@ -53,15 +55,69 @@ you can check for the current docset in your ``conf.py`` file as follows:
       "dev": {},
    }
 
-   docset = get_project(multiproject_projects)
+   current_project = get_project(multiproject_projects)
 
-   locale_dirs = [f"{docset}/locale/"]
+   locale_dirs = [f"{current_project}/locale/"]
 
-   if docset == "user":
+   if current_project == "user":
        language = "en"
        extensions += ["custom.extension"]
-   elif docset == "dev":
+       project = "User Documentation"
+   elif current_project == "dev":
        language = "es"
+       project = "Development documentation"
+
+Using multiple conf.py files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   # File: docs/conf.py
+
+   extensions = [
+      "multiproject.extension",
+   ]
+
+   multiproject_projects = {
+      # Set `use_config_file` to false
+      # to avoid including the files twice.
+      "user": {
+          "use_config_file": False,
+      },
+      "dev": {
+          "use_config_file": False,
+      },
+   }
+
+   current_project  = get_project(multiproject_projects)
+
+   # Set all values directly
+   # -----------------------
+
+   if current_project == 'user':
+      # File: docs/user/conf.py
+      from user.conf import *
+   elif current_project == 'dev':
+      # File: docs/dev/conf.py
+      from dev.conf import *
+
+   # Set value by value
+   # ------------------
+
+   if current_project == 'user':
+      # File: docs/user/conf.py
+      import user.conf as config
+   elif current_project == 'dev':
+      # File: docs/dev/conf.py
+      import dev.conf as config
+
+   # Replace the original values.
+   project = config.project
+   version = config.version
+   language = config.language
+
+   # Extending the original value.
+   extensions += config.extensions
 
 Sharing a conf.py file without using an extension
 -------------------------------------------------
@@ -78,8 +134,8 @@ For example, in the following structure:
    │   ├── conf.py
    │   └── index.rst
    └── user
-      ├── conf.py
-      └── index.rst
+       ├── conf.py
+       └── index.rst
 
 The ``docs/conf.py`` file has the shared configuration,
 and each ``docs/dev/conf.py``, ``docs/user/conf.py`` files
