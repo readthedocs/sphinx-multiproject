@@ -149,3 +149,70 @@ class TestExtension:
 
         for k, v in expected_config.items():
             assert app.config[k] == v
+
+    @pytest.mark.parametrize(
+        "project, expected_text, expected_config",
+        [
+            (
+                "api",
+                "API documentation",
+                {
+                    "master_doc": "index",
+                    "project": "API",
+                },
+            ),
+            (
+                "dev",
+                "Dev documentation",
+                {
+                    "master_doc": "index",
+                    "project": "Dev",
+                },
+            ),
+            (
+                "user",
+                "User documentation",
+                {
+                    "project": "User",
+                    "suppress_warnings": ["ref.python"],
+                },
+            ),
+        ],
+    )
+    def test_using_config_file(
+        self, make_app, monkeypatch, project, expected_text, expected_config
+    ):
+        monkeypatch.setenv("PROJECT", project)
+        app = make_app("html", srcdir=basedir / "multipleconfs")
+        app.build()
+
+        expected_srcdir = basedir / "multipleconfs" / project
+        assert app.srcdir == str(expected_srcdir)
+
+        out = (Path(app.outdir) / "index.html").read_text()
+        assert expected_text in out
+
+        for k, v in expected_config.items():
+            assert app.config[k] == v
+
+    def test_not_using_config_file(self, make_app, monkeypatch):
+        monkeypatch.setenv("PROJECT", "user")
+        config = {
+            "project": "A project",
+            "multiproject_projects": {
+                "user": {
+                    "use_config_file": False,
+                    "config": {
+                        "project": "Override",
+                    },
+                },
+            },
+        }
+        assert (basedir / "multipleconfs/user/conf.py").exists()
+        app = make_app("html", srcdir=basedir / "multipleconfs", confoverrides=config)
+        app.build()
+
+        assert app.config.project == "Override"
+
+        out = (Path(app.outdir) / "index.html").read_text()
+        assert "User documentation" in out
