@@ -5,27 +5,27 @@ from sphinx.util import logging
 log = logging.getLogger(__name__)
 
 
-def get_project(docsets, env_var="DOCSET"):
+def get_project(projects, env_var="PROJECT"):
     """
     Get the current docset.
 
-    :param dict docsets: A dictionary of docsets.
+    :param dict docsets: A dictionary of projects.
     :param str env_var: The env variable name from where to read
-     the value of the current docset.
+     the value of the current project.
 
-    :returns: the name of the current docset.
+    :returns: the name of the current project.
     """
-    if not docsets:
-        log.error("`docsets` can't be empty.")
+    if not projects:
+        log.error("`projects` can't be empty.")
         raise ValueError
 
-    docset_names = list(docsets.keys())
-    docset = os.environ.get(env_var, docset_names[0])
-    if docset not in docset_names:
+    project_names = list(projects.keys())
+    project = os.environ.get(env_var, project_names[0])
+    if project not in project_names:
         log.error(
-            "Docset `%s` isn't valid. Valid values are: %s",
-            docset,
-            ", ".join(docset_names),
+            "Project `%s` isn't valid. Valid values are: %s",
+            project,
+            ", ".join(project_names),
         )
         raise Exception
-    return docset
+    return project

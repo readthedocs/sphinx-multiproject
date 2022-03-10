@@ -8,7 +8,7 @@ basedir = Path(__file__).parent / "examples"
 
 class TestExtension:
     @pytest.mark.sphinx("html", srcdir=basedir / "basic")
-    def test_build_default_docset(self, app):
+    def test_build_default_project(self, app):
         assert list(app.config.multiproject_projects.keys())[0] == "api"
         app.build()
         expected_srcdir = basedir / "basic/api"
@@ -17,23 +17,23 @@ class TestExtension:
         assert "API documentation" in out
 
     @pytest.mark.parametrize(
-        "docset, expected_text",
+        "project, expected_text",
         [
             ("api", "API documentation"),
             ("dev", "Dev documentation"),
             ("user", "User documentation"),
         ],
     )
-    def test_build_docset(self, make_app, monkeypatch, docset, expected_text):
-        monkeypatch.setenv("DOCSET", docset)
+    def test_build_project(self, make_app, monkeypatch, project, expected_text):
+        monkeypatch.setenv("PROJECT", project)
         app = make_app("html", srcdir=basedir / "basic")
         app.build()
-        expected_srcdir = basedir / "basic" / docset
+        expected_srcdir = basedir / "basic" / project
         assert app.srcdir == str(expected_srcdir)
         out = (Path(app.outdir) / "index.html").read_text()
         assert expected_text in out
 
-    def test_per_docset_settings(self, make_app):
+    def test_per_projec_settings(self, make_app):
         config = {
             "project": "A project",
             "multiproject_projects": {
@@ -52,7 +52,7 @@ class TestExtension:
         out = (Path(app.outdir) / "index.html").read_text()
         assert "Dev documentation" in out
 
-    def test_custom_docset_path(self, make_app):
+    def test_custom_project_path(self, make_app):
         config = {
             "multiproject_projects": {
                 "dev": {
@@ -67,7 +67,7 @@ class TestExtension:
         assert "User documentation" in out
 
     def test_custom_env_var(self, make_app, monkeypatch):
-        monkeypatch.setenv("DOCSET", "dev")
+        monkeypatch.setenv("PROJECT", "dev")
         monkeypatch.setenv("MYDOCSET", "user")
         config = {"multiproject_env_var": "MYDOCSET"}
         app = make_app("html", srcdir=basedir / "basic", confoverrides=config)
@@ -85,6 +85,7 @@ class TestExtension:
             "language": "en",
             "multiproject_projects": {
                 "dev": {
+                    "use_config_file": False,
                     "config": {
                         "language": "es",
                     },
@@ -98,11 +99,11 @@ class TestExtension:
 
         log.warning.assert_called_once()
         args, _ = log.warning.call_args
-        assert args[0].startswith("Setting the `%s` option inside")
+        assert args[0].startswith("Setting the `%s` option from the extension")
         assert args[1] == "language"
 
     @pytest.mark.parametrize(
-        "docset, expected_text, expected_config",
+        "project, expected_text, expected_config",
         [
             (
                 "api",
@@ -134,13 +135,13 @@ class TestExtension:
         ],
     )
     def test_conditional_settings(
-        self, make_app, monkeypatch, docset, expected_text, expected_config
+        self, make_app, monkeypatch, project, expected_text, expected_config
     ):
-        monkeypatch.setenv("DOCSET", docset)
+        monkeypatch.setenv("PROJECT", project)
         app = make_app("html", srcdir=basedir / "conditional")
         app.build()
 
-        expected_srcdir = basedir / "conditional" / docset
+        expected_srcdir = basedir / "conditional" / project
         assert app.srcdir == str(expected_srcdir)
 
         out = (Path(app.outdir) / "index.html").read_text()
