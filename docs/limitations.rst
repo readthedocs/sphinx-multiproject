@@ -29,3 +29,15 @@ which can result in some unexpected problems.
 
 The extension/theme shouldn't assume that the configuration directory
 is the same as the source directory.
+
+Read the Docs configuration file
+--------------------------------
+
+Read the Docs doesn't support having more than one
+`configuration file`_ in your repository.
+
+This is a problem if your projects require some specific and incompatible
+settings, like a different python version, different requirements,
+or different search settings.
+
+.. _configuration file: https://docs.readthedocs.io/en/stable/config-file/v2.html
