@@ -1,5 +1,5 @@
 extensions = [
-    "multiproject.extension",
+    "multiproject",
     "sphinx.ext.intersphinx",
     "sphinx.ext.autodoc",
 ]

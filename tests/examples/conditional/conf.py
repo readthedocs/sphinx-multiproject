@@ -1,7 +1,7 @@
 from multiproject.utils import get_project
 
 extensions = [
-    "multiproject.extension",
+    "multiproject",
     "sphinx.ext.intersphinx",
     "sphinx.ext.autodoc",
 ]

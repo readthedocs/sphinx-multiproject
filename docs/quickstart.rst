@@ -35,7 +35,7 @@ using their specific configuration file.
    # File: docs/conf.py
 
    extensions = [
-      "multiproject.extension",
+      "multiproject",
       # Your other extensions.
       "sphinx.ext.intersphinx",
       ...

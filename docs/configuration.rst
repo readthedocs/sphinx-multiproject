@@ -6,7 +6,8 @@ You can set the following options in your ``conf.py`` file.
 .. confval:: multiproject_projects
 
    A dictionary defining the projects that will share the configuration.
-   You must define at least one project.
+   You must define at least one project, by default the options from each
+   project's ``conf.py`` file would be used.
 
    Example:
 
@@ -60,8 +61,9 @@ You can set the following options in your ``conf.py`` file.
 
    .. confval:: use_config_file
 
-      If ``True``, the configuration values from ``{path}/conf.py`` would be automatically imported when building this project.
-      Defaults to `True`.
+      If ``True``, the configuration values from ``{path}/conf.py``
+      would be automatically imported when building this project.
+      Defaults to ``True``.
 
       The values from this file will have precedence over :confval:`config`.
 

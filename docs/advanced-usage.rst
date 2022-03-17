@@ -47,7 +47,7 @@ Using one conf.py file
    from multiproject.utils import get_project
 
    extensions = [
-      "multiproject.extension",
+      "multiproject",
    ]
 
    multiproject_projects = {
@@ -75,7 +75,7 @@ Using multiple conf.py files
    # File: docs/conf.py
 
    extensions = [
-      "multiproject.extension",
+      "multiproject",
    ]
 
    multiproject_projects = {
