@@ -21,8 +21,9 @@ You can set the following options in your ``conf.py`` file.
 
    .. confval:: path
 
-      By default it's the same as the name of the project.
-      It can be a relative (to the conf.py file) or an absolute path.
+      Path to the nested project's ``conf.py`` file.
+      By default, the key name used in ``multiproject_projects`` is also the directory name for the nested project's ``conf.py`` file.
+      This can be a relative path (to the main ``conf.py`` file) or an absolute path.
 
       Example:
 
@@ -37,7 +38,7 @@ You can set the following options in your ``conf.py`` file.
    .. confval:: config
 
       A dictionary of options specific to this project.
-      Useful if you don't want to have a specific ``conf.py`` file
+      This is useful if you don't want to have a specific ``conf.py`` file
       for each project.
 
       .. warning::
@@ -59,7 +60,7 @@ You can set the following options in your ``conf.py`` file.
 
    .. confval:: use_config_file
 
-      If `True` the config from ``{path}/conf.py`` would be included for this project.
+      If ``True``, the configuration values from ``{path}/conf.py`` would be automatically imported when building this project.
       Defaults to `True`.
 
       The values from this file will have precedence over :confval:`config`.

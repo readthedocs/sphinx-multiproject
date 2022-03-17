@@ -37,7 +37,7 @@ Read the Docs doesn't support having more than one
 `configuration file`_ in your repository.
 
 This is a problem if your projects require some specific and incompatible
-settings, like a different python version, different requirements,
+settings, like a different Python version, different requirements,
 or different search settings.
 
 .. _configuration file: https://docs.readthedocs.io/en/stable/config-file/v2.html
