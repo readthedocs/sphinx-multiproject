@@ -69,7 +69,7 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+_build/
 
 # PyBuilder
 target/
@@ -83,6 +83,11 @@ ipython_config.py
 
 # pyenv
 .python-version
+
+# asdf and direnv
+.tool-versions
+.envrc
+.direnv/
 
 # pipenv
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
