@@ -4,9 +4,6 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-from multiproject import __version__
-
-
 # -- Project information -----------------------------------------------------
 
 project = "sphinx-multiproject"
@@ -14,7 +11,7 @@ copyright = "2022, Read the Docs, Inc"
 author = "Read the Docs, Inc"
 
 # The full version, including alpha/beta/rc tags
-release = __version__
+release = "1.0.0rc1"
 
 
 # -- General configuration ---------------------------------------------------

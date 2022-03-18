@@ -3,13 +3,14 @@ from pathlib import Path
 from sphinx.config import CONFIG_FILENAME, eval_config_file
 from sphinx.util import logging
 
-from . import __version__, utils
+from .utils import get_project
 
 log = logging.getLogger(__name__)
 
+__version__ = "1.0.0rc1"
 
 def _get_project_from_config(config):
-    project = utils.get_project(
+    project = get_project(
         config.multiproject_projects,
         config.multiproject_env_var,
     )
