@@ -19,6 +19,7 @@ Build multiple Sphinx projects from a single repository on
    advanced-usage
    limitations
    implementation
+   development
 
 Indices and tables
 ==================

@@ -1,8 +1,8 @@
-# Maintainer Notes
+Development
+===========
 
-These are some notes on common operations only important to package maintainers.
-
-## Versioning
+Versioning
+----------
 
 We use `bumpver` to increment all of our version strings. This removes the
 common headaches around trying to write the version string once and
@@ -11,13 +11,19 @@ sources.
 
 To increment manually:
 
-    bumpver update --set-version="1.1.0"
+.. code:: console
+
+    % bumpver update --set-version="1.1.0"
 
 You can also test first:
 
-    bumpver update --dry --set-version="1.1.0"
+.. code:: console
+
+    % bumpver update --dry --set-version="1.1.0"
 
 And you can even try to leave it to `bumpver` to decide your new version number,
 but incrementing only one part of the version:
 
-    bumpver update --patch
+.. code:: console
+
+    % bumpver update --patch
