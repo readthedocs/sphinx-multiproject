@@ -4,7 +4,7 @@ Development
 Versioning
 ----------
 
-We use `bumpver` to increment all of our version strings. This removes the
+We use ``bumpver`` to increment all of our version strings. This removes the
 common headaches around trying to write the version string once and
 simultaneously avoid cyclical imports. It also automates versioning non-Python
 sources.
@@ -21,7 +21,7 @@ You can also test first:
 
     % bumpver update --dry --set-version="1.1.0"
 
-And you can even try to leave it to `bumpver` to decide your new version number,
+And you can even try to leave it to ``bumpver`` to decide your new version number,
 but incrementing only one part of the version:
 
 .. code:: console
