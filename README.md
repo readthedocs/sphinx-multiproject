@@ -1,5 +1,6 @@
 # sphinx-multiproject
 
+[![PyPI](https://img.shields.io/pypi/v/sphinx-multiproject.svg)](https://pypi.org/project/sphinx-multiproject/)
 [![CircleCI](https://circleci.com/gh/readthedocs/sphinx-multiproject/tree/main.svg?style=svg)](https://circleci.com/gh/readthedocs/sphinx-multiproject/tree/main)
 [![Documentation Status](https://readthedocs.org/projects/sphinx-multiproject/badge/?version=latest)](https://sphinx-multiproject.readthedocs.io/en/latest/?badge=latest)
 
