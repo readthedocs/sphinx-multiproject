@@ -34,7 +34,9 @@ def _override_srdir(app, config):
     new_srcdir = Path(options.get("path", project))
     if not new_srcdir.is_absolute():
         new_srcdir = original_srcdir / new_srcdir
-    app.srcdir = str(new_srcdir.resolve())
+    # app.srcdir is a Path object and not 'str' in newer versions of Sphinx
+    # app.srcdir = str(new_srcdir.resolve())
+    app.srcdir = new_srcdir.resolve()
 
 
 def _override_config(app, config):
