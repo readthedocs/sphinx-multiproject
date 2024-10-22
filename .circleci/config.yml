@@ -6,7 +6,7 @@ commands:
     parameters:
       envs:
         type: string
-        default: "sphinx4,sphinx5,sphinx6,sphinx7,sphinx8,sphinxlatest"
+        default: "sphinx5,sphinx6,sphinx7,sphinx8,sphinxlatest"
     steps:
       - checkout
       - run: pip install --user tox
