@@ -11,7 +11,7 @@ commands:
       - checkout
       - run: pip install --user tox
       - run:
-          command: tox -e "{<<parameters.envs>>}"
+          command: tox -e "<<parameters.envs>>"
 
 jobs:
   py39:
