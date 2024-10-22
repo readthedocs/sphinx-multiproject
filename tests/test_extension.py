@@ -20,7 +20,7 @@ class TestExtension:
         assert list(app.config.multiproject_projects.keys())[0] == "api"
         app.build()
         expected_srcdir = basedir / "basic/api"
-        assert app.srcdir == str(expected_srcdir)
+        assert str(app.srcdir) == str(expected_srcdir)
         out = (Path(app.outdir) / "index.html").read_text()
         assert "API documentation" in out
 
@@ -37,7 +37,7 @@ class TestExtension:
         app = make_app("html", srcdir=basedir / "basic")
         app.build()
         expected_srcdir = basedir / "basic" / project
-        assert app.srcdir == str(expected_srcdir)
+        assert str(app.srcdir) == str(expected_srcdir)
         out = (Path(app.outdir) / "index.html").read_text()
         assert expected_text in out
 
@@ -82,7 +82,7 @@ class TestExtension:
         app.build()
 
         expected_srcdir = basedir / "basic/user"
-        assert app.srcdir == str(expected_srcdir)
+        assert str(app.srcdir) == str(expected_srcdir)
 
         out = (Path(app.outdir) / "index.html").read_text()
         assert "User documentation" in out
@@ -150,7 +150,7 @@ class TestExtension:
         app.build()
 
         expected_srcdir = basedir / "conditional" / project
-        assert app.srcdir == str(expected_srcdir)
+        assert str(app.srcdir) == str(expected_srcdir)
 
         out = (Path(app.outdir) / "index.html").read_text()
         assert expected_text in out
@@ -195,7 +195,7 @@ class TestExtension:
         app.build()
 
         expected_srcdir = basedir / "multipleconfs" / project
-        assert app.srcdir == str(expected_srcdir)
+        assert str(app.srcdir) == str(expected_srcdir)
 
         out = (Path(app.outdir) / "index.html").read_text()
         assert expected_text in out
