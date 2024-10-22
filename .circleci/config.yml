@@ -8,7 +8,7 @@ commands:
         type: string
       sphinx-version:
         type: string
-        default: "3,40,41,42,43,44,latest"
+        default: "4,5,6,7,8,latest"
     steps:
       - checkout
       - run: pip install --user tox
@@ -16,18 +16,6 @@ commands:
           command: tox -e "<<parameters.version>>-sphinx{<<parameters.sphinx-version>>}"
 
 jobs:
-  py37:
-    docker:
-      - image: 'cimg/python:3.7'
-    steps:
-      - run-tox:
-          version: py37
-  py38:
-    docker:
-      - image: 'cimg/python:3.8'
-    steps:
-      - run-tox:
-          version: py38
   py39:
     docker:
       - image: 'cimg/python:3.9'
@@ -40,10 +28,27 @@ jobs:
     steps:
       - run-tox:
           version: py310
-          sphinx-version: 42,43,44,latest
+  py311:
+    docker:
+      - image: 'cimg/python:3.11'
+    steps:
+      - run-tox:
+          version: py311
+  py312:
+    docker:
+      - image: 'cimg/python:3.12'
+    steps:
+      - run-tox:
+          version: py312
+  py313:
+    docker:
+      - image: 'cimg/python:3.13'
+    steps:
+      - run-tox:
+          version: py313
   checks:
     docker:
-      - image: 'cimg/python:3.10'
+      - image: 'cimg/python:3.13'
     steps:
       - checkout
       - run: pip install --user tox
@@ -54,7 +59,8 @@ workflows:
   tests:
     jobs:
       - checks
+      - py313
+      - py312
+      - py311
       - py310
       - py39
-      - py38
-      - py37
