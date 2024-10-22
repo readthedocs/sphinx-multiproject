@@ -1,7 +1,7 @@
 from unittest import mock
 
 import pytest
-from sphinx.testing.path import path as Path
+from pathlib import Path
 
 basedir = Path(__file__).parent / "examples"
 
