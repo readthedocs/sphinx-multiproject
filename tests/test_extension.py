@@ -1,7 +1,15 @@
 from unittest import mock
 
 import pytest
-from pathlib import Path
+from sphinx import version_info as sphinx_version
+
+# Sphinx versions previous to 7.2 used a custom
+# Path class for the srcdir in tests, while newer versions
+# use a plain Path class.
+if sphinx_version >= (7, 2, 0):
+    from pathlib import Path
+else:
+    from sphinx.testing.path import path as Path
 
 basedir = Path(__file__).parent / "examples"
 

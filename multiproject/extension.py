@@ -1,8 +1,15 @@
 from pathlib import Path
 
+from sphinx import version_info as sphinx_version
 from sphinx.config import CONFIG_FILENAME, eval_config_file
 from sphinx.util import logging
-from sphinx.util._pathlib import _StrPath
+
+# Sphinx versions previous to 7.2 used a string for the srcdir,
+# while newer versions use a custom Path class.
+if sphinx_version >= (7, 2, 0):
+    from sphinx.util._pathlib import _StrPath as SphinxSrcDir
+else:
+    SphinxSrcDir = str
 
 from .utils import get_project
 
@@ -35,8 +42,7 @@ def _override_srdir(app, config):
     new_srcdir = Path(options.get("path", project))
     if not new_srcdir.is_absolute():
         new_srcdir = original_srcdir / new_srcdir
-    # Sphinx uses a custom Path class for the srcdir.
-    app.srcdir = _StrPath(new_srcdir.resolve())
+    app.srcdir = SphinxSrcDir(new_srcdir.resolve())
 
 
 def _override_config(app, config):
