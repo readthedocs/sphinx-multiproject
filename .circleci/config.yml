@@ -34,11 +34,6 @@ jobs:
       - image: 'cimg/python:3.12'
     steps:
       - run-tox
-  py313:
-    docker:
-      - image: 'cimg/python:3.13'
-    steps:
-      - run-tox
   checks:
     docker:
       - image: 'cimg/python:3.13'
@@ -52,7 +47,6 @@ workflows:
   tests:
     jobs:
       - checks
-      - py313
       - py312
       - py311
       - py310
