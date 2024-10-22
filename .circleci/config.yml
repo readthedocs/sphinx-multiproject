@@ -6,7 +6,7 @@ commands:
     parameters:
       envs:
         type: string
-        default: "sphinx5,sphinx6,sphinx7,sphinx8,sphinxlatest"
+        default: "sphinx6,sphinx7,sphinx8,sphinxlatest"
     steps:
       - checkout
       - run: pip install --user tox
@@ -35,6 +35,11 @@ jobs:
       - image: 'cimg/python:3.12'
     steps:
       - run-tox
+  py313:
+    docker:
+      - image: 'cimg/python:3.13'
+    steps:
+      - run-tox
   checks:
     docker:
       - image: 'cimg/python:3.13'
@@ -48,6 +53,7 @@ workflows:
   tests:
     jobs:
       - checks
+      - py313
       - py312
       - py311
       - py310
