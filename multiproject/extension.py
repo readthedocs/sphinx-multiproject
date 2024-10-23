@@ -15,7 +15,7 @@ from .utils import get_project
 
 log = logging.getLogger(__name__)
 
-__version__ = "1.0.0rc1"
+__version__ = "1.0.0"
 
 
 def _get_project_from_config(config):

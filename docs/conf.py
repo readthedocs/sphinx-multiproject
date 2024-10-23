@@ -11,7 +11,7 @@ copyright = "2022, Read the Docs, Inc"
 author = "Read the Docs, Inc"
 
 # The full version, including alpha/beta/rc tags
-release = "1.0.0rc1"
+release = "1.0.0"
 
 
 # -- General configuration ---------------------------------------------------
