@@ -4,46 +4,45 @@ commands:
   run-tox:
     description: "Run tox"
     parameters:
-      version:
+      envs:
         type: string
-      sphinx-version:
-        type: string
-        default: "3,40,41,42,43,44,latest"
+        default: "sphinx6,sphinx7,sphinx8,sphinxlatest"
     steps:
       - checkout
       - run: pip install --user tox
       - run:
-          command: tox -e "<<parameters.version>>-sphinx{<<parameters.sphinx-version>>}"
+          command: tox -e "<<parameters.envs>>"
 
 jobs:
-  py37:
-    docker:
-      - image: 'cimg/python:3.7'
-    steps:
-      - run-tox:
-          version: py37
-  py38:
-    docker:
-      - image: 'cimg/python:3.8'
-    steps:
-      - run-tox:
-          version: py38
   py39:
     docker:
       - image: 'cimg/python:3.9'
     steps:
       - run-tox:
-          version: py39
+          envs: "sphinx5,sphinx6,sphinx7"
   py310:
     docker:
       - image: 'cimg/python:3.10'
     steps:
-      - run-tox:
-          version: py310
-          sphinx-version: 42,43,44,latest
+      - run-tox
+  py311:
+    docker:
+      - image: 'cimg/python:3.11'
+    steps:
+      - run-tox
+  py312:
+    docker:
+      - image: 'cimg/python:3.12'
+    steps:
+      - run-tox
+  py313:
+    docker:
+      - image: 'cimg/python:3.13'
+    steps:
+      - run-tox
   checks:
     docker:
-      - image: 'cimg/python:3.10'
+      - image: 'cimg/python:3.13'
     steps:
       - checkout
       - run: pip install --user tox
@@ -54,7 +53,8 @@ workflows:
   tests:
     jobs:
       - checks
+      - py313
+      - py312
+      - py311
       - py310
       - py39
-      - py38
-      - py37

@@ -1,7 +1,15 @@
 from unittest import mock
 
 import pytest
-from sphinx.testing.path import path as Path
+from sphinx import version_info as sphinx_version
+
+# Sphinx versions previous to 7.2 used a custom
+# Path class for the srcdir in tests, while newer versions
+# use a plain Path class.
+if sphinx_version >= (7, 2, 0):
+    from pathlib import Path
+else:
+    from sphinx.testing.path import path as Path
 
 basedir = Path(__file__).parent / "examples"
 
@@ -12,7 +20,7 @@ class TestExtension:
         assert list(app.config.multiproject_projects.keys())[0] == "api"
         app.build()
         expected_srcdir = basedir / "basic/api"
-        assert app.srcdir == str(expected_srcdir)
+        assert str(app.srcdir) == str(expected_srcdir)
         out = (Path(app.outdir) / "index.html").read_text()
         assert "API documentation" in out
 
@@ -29,7 +37,7 @@ class TestExtension:
         app = make_app("html", srcdir=basedir / "basic")
         app.build()
         expected_srcdir = basedir / "basic" / project
-        assert app.srcdir == str(expected_srcdir)
+        assert str(app.srcdir) == str(expected_srcdir)
         out = (Path(app.outdir) / "index.html").read_text()
         assert expected_text in out
 
@@ -74,7 +82,7 @@ class TestExtension:
         app.build()
 
         expected_srcdir = basedir / "basic/user"
-        assert app.srcdir == str(expected_srcdir)
+        assert str(app.srcdir) == str(expected_srcdir)
 
         out = (Path(app.outdir) / "index.html").read_text()
         assert "User documentation" in out
@@ -142,7 +150,7 @@ class TestExtension:
         app.build()
 
         expected_srcdir = basedir / "conditional" / project
-        assert app.srcdir == str(expected_srcdir)
+        assert str(app.srcdir) == str(expected_srcdir)
 
         out = (Path(app.outdir) / "index.html").read_text()
         assert expected_text in out
@@ -187,7 +195,7 @@ class TestExtension:
         app.build()
 
         expected_srcdir = basedir / "multipleconfs" / project
-        assert app.srcdir == str(expected_srcdir)
+        assert str(app.srcdir) == str(expected_srcdir)
 
         out = (Path(app.outdir) / "index.html").read_text()
         assert expected_text in out
