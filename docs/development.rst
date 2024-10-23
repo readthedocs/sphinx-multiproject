@@ -9,7 +9,7 @@ Releasing
    % pip install --upgrade build twine
    % python -m build --sdist --wheel
    % twine check dist/*
-   % twine upload --sign --identity security@readthedocs.org dist/*
+   % twine upload dist/*
 
 Versioning
 ----------
